@@ -22,7 +22,7 @@ const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     if (!token) {
         return res.status(401).json({ message: 'No valid token found' });
     }
-    console.log("Decoded token:", token);
+    // console.log("Decoded token:", token);
     req.user = token;
     next();
 });

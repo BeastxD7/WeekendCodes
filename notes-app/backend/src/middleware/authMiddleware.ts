@@ -10,8 +10,6 @@ export interface AuthenticatedRequest extends Request {
   user?: string | JwtPayload;
 }
 
-
-
 export const authMiddleware = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   console.log("auth middleware called");
 
@@ -21,7 +19,7 @@ export const authMiddleware = async (req: AuthenticatedRequest, res: Response, n
     return res.status(401).json({ message: 'No valid token found' });
   }
 
-  console.log("Decoded token:", token);
+  // console.log("Decoded token:", token);
   req.user = token;
   next();
 };
