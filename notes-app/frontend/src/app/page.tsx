@@ -1,5 +1,5 @@
 "use client";
-import AuthButton from '@/components/AuthButton'
+import Navbar from '@/components/Navbar';
 import React from 'react'
 
 const page = () => {
@@ -23,8 +23,9 @@ const page = () => {
   };
 
   return (
-    <div className='w-screen h-screen flex justify-center items-center'>
-      <AuthButton />
+    <div className='w-screen h-screen m-auto'>
+      <Navbar />
+      {/* <AuthButton /> */}
       <button onClick={handleSubmit} className='ml-4 p-2 bg-blue-500 text-white rounded'>Click Me</button>
     </div>
   )
