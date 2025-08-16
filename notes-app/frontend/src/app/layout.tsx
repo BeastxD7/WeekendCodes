@@ -1,11 +1,12 @@
 // app/layout.tsx
 import SessionProviderWrapper from "@/utils/SessionProviderWrapper";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
  // adjust path if needed
 
 export const metadata = {
-  title: "Your App",
-  description: "Whatever",
+  title: "Notes App",
+  description: "Simple Notes Application",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -13,7 +14,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <SessionProviderWrapper>
-          {children}
+          <div className='w-screen h-screen m-auto'>
+      <Navbar />
+
+            {children}
+          </div>
         </SessionProviderWrapper>
       </body>
     </html>

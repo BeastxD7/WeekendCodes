@@ -8,7 +8,7 @@ const page = () => {
     e.preventDefault();
     // Handle form submission
     try {
-      const response = await fetch('http://localhost:8000/api/notes', {
+      const response = await fetch('http://localhost:8000/api/test', {
         method: 'GET',
         credentials: 'include'
       });
@@ -16,16 +16,14 @@ const page = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log("Form submitted successfully:", data);
+      console.log("Sucess", data);
     } catch (error) {
       console.error("Error during form submission:", error);
     }
   };
 
   return (
-    <div className='w-screen h-screen m-auto'>
-      <Navbar />
-      {/* <AuthButton /> */}
+    <div >
       <button onClick={handleSubmit} className='ml-4 p-2 bg-blue-500 text-white rounded'>Click Me</button>
     </div>
   )

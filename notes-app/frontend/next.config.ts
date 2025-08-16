@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
+/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    externalDir: true, // 👈 allows imports outside /frontend
+  },
 };
 
 export default nextConfig;

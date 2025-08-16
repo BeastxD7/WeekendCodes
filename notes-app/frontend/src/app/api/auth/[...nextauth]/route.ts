@@ -1,9 +1,9 @@
 import NextAuth, { Session, DefaultSession, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@/generated/prisma";
+import  {prisma1}  from "@/lib/prisma"; 
+
 import { JWT } from "next-auth/jwt";
-import { log } from "node:console";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -18,7 +18,7 @@ declare module "next-auth" {
   }
 }
 
-const prisma = new PrismaClient();
+
 
 export const authOptions = {
   providers: [
@@ -34,7 +34,7 @@ export const authOptions = {
       },
     }),
   ],
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma1),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt" as const,
@@ -49,7 +49,7 @@ export const authOptions = {
         token.username = user.username;
       } else if (!token.username && token.id) {
         // On subsequent calls without user, load username from DB if missing
-        const dbUser = await prisma.user.findUnique({
+        const dbUser = await prisma1.user.findUnique({
           where: { id: token.id as string },
           select: { username: true },
         });
@@ -68,7 +68,7 @@ export const authOptions = {
   events: {
     async createUser({ user }: { user: { id: string; email?: string | null } }) {
       if (user.email) {
-        await prisma.user.update({
+        await prisma1.user.update({
           where: { id: user.id },
           data: {
             // Automatically set username as email prefix

@@ -8,10 +8,10 @@ const Navbar = () => {
       <div className='flex justify-between items-center container mx-auto'>
         <h1 className='text-white text-lg font-bold'>Notes App</h1>
         
-            <ul className='flex gap-4'>
-                <Link href="/" className='text-white hover:text-gray-300'>Home</Link>
-                <Link href="/notes" className='text-white hover:text-gray-300'>Notes</Link>
-                <Link href="/about" className='text-white hover:text-gray-300'>About</Link>
+            <ul className='md:flex gap-4 hidden items-center'>
+                <Link href="/" className='text-white hover:text-gray-300 '>Home</Link>
+                <Link href="/notes" className='text-white hover:text-gray-300 '>Notes</Link>
+                <Link href="/about" className='text-white hover:text-gray-300 '>About</Link>
                 <AuthButton />
             </ul>
       </div>

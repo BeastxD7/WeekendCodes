@@ -15,6 +15,9 @@ app.get('/api/notes', authMiddleware_1.authMiddleware, (req, res) => {
     // req.user is now typed and available
     res.json({ message: 'Authenticated!', user: req.user });
 });
+app.post('/api/notes', authMiddleware_1.authMiddleware, (req, res) => {
+    res.json({ message: 'Authenticated!', user: req.user });
+});
 app.listen(process.env.PORT || 8000, () => {
     console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
