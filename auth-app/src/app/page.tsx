@@ -2,7 +2,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className='py-36 flex justify-center'>page</div>
   )
 }
 

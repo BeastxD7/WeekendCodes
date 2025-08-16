@@ -1,7 +1,59 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import CardNav from "@/components/common/Navbar";
 
+const logo = "/logo.png";
+
+const items = [
+  {
+    label: "Get Started",
+    bgColor: "linear-gradient(90deg, #0D0716 0%, #3a185c 100%)",
+    textColor: "#fff",
+    links: [
+      { label: "Sign In", ariaLabel: "Login", href: "/auth/signin" },
+      { label: "Sign Up", ariaLabel: "Get Started", href: "/auth/signup" },
+    ],
+  },
+  {
+    label: "Projects",
+    bgColor: "linear-gradient(90deg, #170D27 0%, #4b206e 100%)",
+    textColor: "#fff",
+    links: [
+      {
+        label: "Featured",
+        ariaLabel: "Featured Projects",
+        href: "/projects/featured",
+      },
+      {
+        label: "Case Studies",
+        ariaLabel: "Project Case Studies",
+        href: "/projects/case-studies",
+      },
+    ],
+  },
+  {
+    label: "Contact",
+    bgColor: "linear-gradient(90deg, #271E37 0%, #6c2e9a 100%)",
+    textColor: "#fff",
+    links: [
+      {
+        label: "Email",
+        ariaLabel: "Email us",
+        href: "mailto:info@example.com",
+      },
+      {
+        label: "Twitter",
+        ariaLabel: "Twitter",
+        href: "https://twitter.com/example",
+      },
+      {
+        label: "LinkedIn",
+        ariaLabel: "LinkedIn",
+        href: "https://linkedin.com/company/example",
+      },
+    ],
+  },
+];
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +67,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`} suppressHydrationWarning={true}>
+      <body
+        className={`antialiased bg-gray-900 text-white w-screen h-screen`}
+        suppressHydrationWarning={true}>
+        <CardNav
+          logo={logo}
+          logoAlt="Company Logo"
+          items={items}
+          baseColor="#1E2939"
+          menuColor="#fff"
+          buttonBgColor="#111"
+          buttonTextColor="#fff"
+          ease="power3.out"
+        />
         {children}
       </body>
     </html>
