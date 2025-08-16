@@ -1,6 +1,6 @@
 
-import { SignIn } from '@/app/components/signin-button'
-import { SignOut } from '@/app/components/signout-button'
+import { SignIn } from '@/components/auth/signin-button'
+import { SignOut } from '@/components/auth/signout-button'
 import React from 'react'
 
 const SignInPage = () => {
