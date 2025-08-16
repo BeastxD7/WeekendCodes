@@ -1,5 +1,4 @@
 import { SessionProvider } from 'next-auth/react'
-import React from 'react'
 import CheckAuthPage from '../components/Check'
 
 const CheckPage = () => {
