@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import CardNav from "@/components/common/Navbar";
+import { SessionProvider } from 'next-auth/react'
 
 const logo = "/logo.png";
 
@@ -70,17 +71,19 @@ export default function RootLayout({
       <body
         className={`antialiased bg-gray-900 text-white w-screen h-screen`}
         suppressHydrationWarning={true}>
-        <CardNav
-          logo={logo}
-          logoAlt="Company Logo"
-          items={items}
-          baseColor="#1E2939"
-          menuColor="#fff"
-          buttonBgColor="#111"
-          buttonTextColor="#fff"
-          ease="power3.out"
-        />
+          <SessionProvider>
+            <CardNav
+              logo={logo}
+              logoAlt="Company Logo"
+              items={items}
+              baseColor="#1E2939"
+              menuColor="#fff"
+              buttonBgColor="#111"
+              buttonTextColor="#fff"
+              ease="power3.out"
+            />
         {children}
+        </SessionProvider>
       </body>
     </html>
   );

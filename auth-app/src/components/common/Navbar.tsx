@@ -5,6 +5,9 @@ import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { SignOut } from "../auth/signout-button";
+import { SignIn } from "../auth/signin-button";
 
 type CardNavLink = {
   label: string;
@@ -162,6 +165,8 @@ const CardNav: React.FC<CardNavProps> = ({
     if (el) cardsRef.current[i] = el;
   };
 
+  const { data: session } = useSession()
+
   return (
     <div
       className={`card-nav-container absolute left-1/2 -translate-x-1/2 w-[90%] max-w-[800px] z-[99] top-[1.2em] md:top-[2em] ${className}`}
@@ -196,14 +201,11 @@ const CardNav: React.FC<CardNavProps> = ({
             <Image width={30} height={30} src={logo} alt={logoAlt} className="logo h-[28px]" />
           </div>
 
-          <Button
-            type="button"
-            className="card-nav-cta-button hidden md:inline-flex border-0 rounded-[calc(0.75rem-0.2rem)] px-4 h-full font-medium cursor-pointer transition-colors duration-300"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-            onClick={() => window.location.href = "/check"}
-          >
-            Get Started
-          </Button>
+          {!session?.user ? (
+            <SignIn/>
+          ) : (
+            <SignOut/>
+          )}
         </div>
 
         <div
