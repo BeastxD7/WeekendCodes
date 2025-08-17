@@ -8,20 +8,31 @@ generator client {
 }
  
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String           @id @default(cuid())
+  name           String?
+  email          String           @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  Authenticator  Authenticator[]
+
+  credits        Int              @default(0) // <-- This line
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  CreditTransaction CreditTransaction[]
 }
- 
+
+model CreditTransaction {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  amount     Int // Positive (top-up/purchase), Negative (spend/consume)
+  type       String // "topup", "spend", etc.
+  createdAt  DateTime @default(now())
+  notes      String?
+}
 model Account {
   userId            String
   type              String
