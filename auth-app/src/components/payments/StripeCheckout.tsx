@@ -18,7 +18,6 @@ function CheckoutForm() {
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const session = useSession();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
