@@ -3,12 +3,12 @@ import Image from "next/image"
  
 export function UserAvatar({ session }: { session: Session | null }) {
   return (
-    <div>
+    <div className="rounded-full overflow-hidden">
       <Image
         src={session?.user?.image ?? "https://i.pravatar.cc/300"}
         alt="User Avatar"
-        width={100}
-        height={100}
+        width={50}
+        height={50}
       />
     </div>
   )
