@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication and profile
+model User {
+  id             String          @id @default(uuid())
+  email          String          @unique
+  password       String
+  name           String
+  role           UserRole        @default(USER)
+  refreshToken   String?         @db.Text
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  quizzes        Quiz[]          @relation("CreatedQuizzes")
+  participations Participation[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+// Quiz model for storing quiz information
+model Quiz {
+  id             String          @id @default(uuid())
+  title          String
+  description    String?
+  timeLimit      Int?            // Time limit in minutes, null means no limit
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  published      Boolean         @default(false)
+  creator        User            @relation("CreatedQuizzes", fields: [creatorId], references: [id])
+  creatorId      String
+  questions      Question[]
+  participations Participation[]
+
+  @@map("quizzes")
+}
+
+// Question model for storing quiz questions
+model Question {
+  id          String   @id @default(uuid())
+  content     String
+  type        QuestionType
+  points      Int      @default(1)
+  order       Int
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  quizId      String
+  options     Option[]
+  answers     Answer[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("questions")
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  SINGLE_CHOICE
+  TRUE_FALSE
+  SHORT_ANSWER
+}
+
+// Option model for storing question options
+model Option {
+  id         String   @id @default(uuid())
+  content    String
+  isCorrect  Boolean
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  answers    Answer[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("options")
+}
+
+// Participation model for tracking quiz attempts
+model Participation {
+  id          String    @id @default(uuid())
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  score       Float?
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  quiz        Quiz      @relation(fields: [quizId], references: [id])
+  quizId      String
+  answers     Answer[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("participations")
+}
+
+// Answer model for storing user answers
+model Answer {
+  id             String        @id @default(uuid())
+  participation  Participation @relation(fields: [participationId], references: [id], onDelete: Cascade)
+  participationId String
+  question       Question      @relation(fields: [questionId], references: [id])
+  questionId     String
+  selectedOption Option?       @relation(fields: [optionId], references: [id])
+  optionId       String?
+  textAnswer     String?
+  isCorrect      Boolean?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("answers")
+}
